@@ -26,12 +26,9 @@ export default function Home() {
       </main>
 
       <footer className="w-full py-6 text-center text-muted-foreground mt-auto px-4">
-        <div className="flex items-center justify-center gap-4">
-          <p>Created by Firebase Studio</p>
-          <a href="https://github.com/Firebase/studio-samples" target="_blank" rel="noopener noreferrer" className="hover:text-cyan-400 transition-colors">
-            <Github className="w-5 h-5" />
-            <span className="sr-only">GitHub</span>
-          </a>
+        <div className="flex flex-col items-center justify-center gap-1">
+          <p>&copy; {new Date().getFullYear()} QR Genie. All Rights Reserved.</p>
+          <p>Designed & Developed by Kishan Patel</p>
         </div>
       </footer>
     </div>
