@@ -114,7 +114,7 @@ const AboutPage = () => {
           <h2 className="text-4xl font-bold text-center mb-10 text-cyan-400">About the Developer</h2>
           <div className="flex flex-col md:flex-row items-center gap-8">
             <div className="w-40 h-40 shrink-0">
-               <img src="https://placehold.co/200x200.png" data-ai-hint="man portrait" alt="Kishan Patel" className="w-full h-full rounded-full border-4 border-cyan-500 shadow-lg object-cover" />
+               <img src="/profile.png" alt="Kishan Patel" className="w-full h-full rounded-full border-4 border-cyan-500 shadow-lg object-cover" />
             </div>
             <div className="text-center md:text-left">
               <h3 className="text-3xl font-bold">Kishan Patel</h3>
