@@ -1,6 +1,7 @@
 import { QrCode, Github } from 'lucide-react';
 import QRGenieApp from '@/components/qr-genie-app';
 import ThemeToggle from '@/components/theme-toggle';
+import Link from 'next/link';
 
 export default function Home() {
   return (
@@ -31,7 +32,11 @@ export default function Home() {
       <footer className="w-full py-6 text-center text-muted-foreground mt-auto px-4 relative z-10">
         <div className="flex flex-col items-center justify-center gap-1">
           <p>&copy; {new Date().getFullYear()} QR Genie. All Rights Reserved.</p>
-          <p>Designed & Developed by Kishan Patel</p>
+          <div className="flex items-center gap-2">
+            <p>Designed & Developed by Kishan Patel</p>
+            <span className="text-gray-500">|</span>
+            <Link href="/about" className="hover:text-cyan-400 transition-colors">About</Link>
+          </div>
         </div>
       </footer>
     </div>
