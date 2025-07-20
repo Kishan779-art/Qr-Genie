@@ -1,14 +1,27 @@
-import { QrCode, Github } from 'lucide-react';
+import { QrCode, Home as HomeIcon, Info } from 'lucide-react';
 import QRGenieApp from '@/components/qr-genie-app';
 import ThemeToggle from '@/components/theme-toggle';
 import Link from 'next/link';
+import { Button } from '@/components/ui/button';
 
 export default function Home() {
   return (
     <div className="flex flex-col min-h-screen bg-gradient-animated text-foreground">
-      <div className="absolute top-6 right-6 z-10">
+      <nav className="absolute top-6 right-6 z-20 flex items-center gap-4">
+        <Button asChild variant="ghost" size="sm" className="hidden sm:flex text-white hover:bg-white/10 hover:text-cyan-300 transition-all duration-300">
+            <Link href="/">
+                <HomeIcon className="mr-2 h-4 w-4" />
+                Home
+            </Link>
+        </Button>
+        <Button asChild variant="ghost" size="sm" className="hidden sm:flex text-white hover:bg-white/10 hover:text-cyan-300 transition-all duration-300">
+            <Link href="/about">
+                <Info className="mr-2 h-4 w-4" />
+                About
+            </Link>
+        </Button>
         <ThemeToggle />
-      </div>
+      </nav>
 
       <header className="w-full pt-20 pb-12 text-center px-4 relative overflow-hidden">
         <div className="absolute inset-0 bg-grid-cyan-500/10 bg-grid-14 [mask-image:radial-gradient(ellipse_at_center,white,transparent_75%)]"></div>

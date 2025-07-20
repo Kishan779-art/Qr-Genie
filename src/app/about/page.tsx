@@ -1,12 +1,29 @@
-import { ArrowLeft, Code, Cpu, Github, Instagram, Layers3, Linkedin, Mail, Send } from "lucide-react";
+import { ArrowLeft, Code, Cpu, Github, Home as HomeIcon, Info, Instagram, Layers3, Linkedin, Mail, Send } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import ThemeToggle from "@/components/theme-toggle";
 
 const AboutPage = () => {
   return (
     <div className="min-h-screen w-full bg-gradient-animated text-white font-body antialiased">
       <div className="absolute inset-0 bg-grid-cyan-500/10 bg-grid-14 [mask-image:radial-gradient(ellipse_at_top_center,white,transparent_70%)]"></div>
       
+      <nav className="absolute top-6 right-6 z-20 flex items-center gap-4">
+        <Button asChild variant="ghost" size="sm" className="hidden sm:flex text-white hover:bg-white/10 hover:text-cyan-300 transition-all duration-300">
+            <Link href="/">
+                <HomeIcon className="mr-2 h-4 w-4" />
+                Home
+            </Link>
+        </Button>
+        <Button asChild variant="ghost" size="sm" className="hidden sm:flex text-white hover:bg-white/10 hover:text-cyan-300 transition-all duration-300">
+            <Link href="/about">
+                <Info className="mr-2 h-4 w-4" />
+                About
+            </Link>
+        </Button>
+        <ThemeToggle />
+      </nav>
+
       <main className="relative z-10 max-w-5xl mx-auto p-4 sm:p-6 lg:p-8 space-y-24">
         {/* Hero Section */}
         <section className="text-center pt-24 pb-12">
