@@ -2,6 +2,7 @@ import { ArrowLeft, Code, Cpu, Github, Home as HomeIcon, Info, Instagram, Linked
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import ThemeToggle from "@/components/theme-toggle";
+import { Layers3 } from "lucide-react";
 
 const AboutPage = () => {
   return (
