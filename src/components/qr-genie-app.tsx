@@ -20,11 +20,12 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { useToast } from "@/hooks/use-toast";
 import { QrCode, Download, History, Trash2, RefreshCw, Copy, Check } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useTheme } from "next-themes";
 
 const formSchema = z.object({
   text: z.string().min(1, "Please enter a valid URL or text."),
   size: z.coerce.number().default(250),
-  fgColor: z.string().default("#FFFFFF"),
+  fgColor: z.string().default("#000000"),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -41,6 +42,7 @@ function HistoryItemDisplay({
 }) {
   const [qrCodeUrl, setQrCodeUrl] = useState('');
   const [isCopied, setIsCopied] = useState(false);
+  const { theme } = useTheme();
 
   useEffect(() => {
     const generateQr = async () => {
@@ -56,7 +58,7 @@ function HistoryItemDisplay({
       }
     };
     generateQr();
-  }, [item]);
+  }, [item, theme]);
 
   const handleCopy = () => {
     navigator.clipboard.writeText(item.text);
@@ -65,12 +67,12 @@ function HistoryItemDisplay({
   };
 
   return (
-    <Card className="bg-white/5 backdrop-blur-sm border-white/10 transition-all duration-300 hover:bg-white/10 hover:shadow-cyan-500/10 hover:shadow-lg hover:-translate-y-1">
+    <Card className="bg-card/50 dark:bg-white/5 backdrop-blur-sm border-white/10 transition-all duration-300 hover:bg-card/70 dark:hover:bg-white/10 hover:shadow-cyan-500/10 hover:shadow-lg hover:-translate-y-1">
       <CardContent className="p-4 flex flex-col sm:flex-row items-center gap-4">
         {qrCodeUrl ? (
-          <img src={qrCodeUrl} alt="QR Code" className="h-24 w-24 rounded-lg shrink-0 border-2 border-white/10 bg-black/20 p-1"/>
+          <img src={qrCodeUrl} alt="QR Code" className="h-24 w-24 rounded-lg shrink-0 border-2 border-border/10 dark:border-white/10 bg-black/5 dark:bg-black/20 p-1"/>
         ) : (
-          <div className="h-24 w-24 rounded-lg shrink-0 border-2 border-white/10 bg-black/20 p-1 flex items-center justify-center">
+          <div className="h-24 w-24 rounded-lg shrink-0 border-2 border-border/10 dark:border-white/10 bg-black/5 dark:bg-black/20 p-1 flex items-center justify-center">
             <QrCode className="h-10 w-10 text-muted-foreground" />
           </div>
         )}
@@ -78,7 +80,7 @@ function HistoryItemDisplay({
           <div className="flex items-center gap-2 justify-center sm:justify-start">
             <p className="font-medium truncate flex-1">{item.text}</p>
             <Button variant="ghost" size="icon" className="h-7 w-7" onClick={handleCopy}>
-              {isCopied ? <Check className="h-4 w-4 text-green-400" /> : <Copy className="h-4 w-4" />}
+              {isCopied ? <Check className="h-4 w-4 text-green-500" /> : <Copy className="h-4 w-4" />}
               <span className="sr-only">Copy Text</span>
             </Button>
           </div>
@@ -86,11 +88,11 @@ function HistoryItemDisplay({
             {format(new Date(item.timestamp), "PPp")} &bull; {item.size}px
           </p>
            <div className="flex gap-2 mt-3 justify-center sm:justify-start">
-            <Button variant="outline" size="sm" onClick={() => onRegenerate(item)} className="bg-transparent border-white/20 hover:bg-white/10">
+            <Button variant="outline" size="sm" onClick={() => onRegenerate(item)} className="bg-transparent dark:border-white/20 dark:hover:bg-white/10">
               <RefreshCw className="h-3 w-3 sm:mr-2"/>
               <span className="hidden sm:inline">Regenerate</span>
             </Button>
-            <Button variant="outline" size="sm" onClick={() => onDownload(item)} className="bg-transparent border-white/20 hover:bg-white/10">
+            <Button variant="outline" size="sm" onClick={() => onDownload(item)} className="bg-transparent dark:border-white/20 dark:hover:bg-white/10">
               <Download className="h-3 w-3 sm:mr-2" />
                <span className="hidden sm:inline">Download</span>
             </Button>
@@ -108,16 +110,22 @@ export default function QRGenieApp() {
   const [history, setHistory] = useState<HistoryItem[]>([]);
   const [isGenerating, setIsGenerating] = useState(false);
   const [pulse, setPulse] = useState(false);
+  const { theme } = useTheme();
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       text: "",
       size: 250,
-      fgColor: "#FFFFFF",
+      fgColor: "#000000",
     },
   });
 
+  useEffect(() => {
+    // Set initial color based on theme
+    form.setValue('fgColor', theme === 'dark' ? '#FFFFFF' : '#000000');
+  }, [theme, form]);
+  
   useEffect(() => {
     try {
       const storedHistory = localStorage.getItem("qrHistory");
@@ -232,7 +240,7 @@ export default function QRGenieApp() {
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-7xl mx-auto p-4 md:p-8">
-      <Card className="lg:col-span-2 bg-black/20 backdrop-blur-sm border-white/10 shadow-lg">
+      <Card className="lg:col-span-2 bg-card/50 dark:bg-black/20 backdrop-blur-sm border-border dark:border-white/10 shadow-lg">
         <CardHeader>
           <CardTitle className="font-headline text-3xl">Create Your QR Code</CardTitle>
           <CardDescription>Enter your text or URL and customize the design.</CardDescription>
@@ -244,7 +252,7 @@ export default function QRGenieApp() {
               <Input
                 id="text"
                 placeholder="e.g., https://example.com"
-                className="bg-white/5 border-white/20 focus:ring-cyan-500"
+                className="bg-background/80 dark:bg-white/5 border-border dark:border-white/20 focus:ring-cyan-500"
                 {...form.register("text")}
               />
               {form.formState.errors.text && (
@@ -259,10 +267,10 @@ export default function QRGenieApp() {
                   onValueChange={(value) => form.setValue("size", parseInt(value))}
                   defaultValue={String(form.getValues("size"))}
                 >
-                  <SelectTrigger id="size" className="bg-white/5 border-white/20 focus:ring-cyan-500">
+                  <SelectTrigger id="size" className="bg-background/80 dark:bg-white/5 border-border dark:border-white/20 focus:ring-cyan-500">
                     <SelectValue placeholder="Select size" />
                   </SelectTrigger>
-                  <SelectContent className="bg-slate-800/80 backdrop-blur-sm border-white/20">
+                  <SelectContent>
                     <SelectItem value="150">Small</SelectItem>
                     <SelectItem value="250">Medium</SelectItem>
                     <SelectItem value="350">Large</SelectItem>
@@ -275,11 +283,11 @@ export default function QRGenieApp() {
                    <Input
                     id="fgColor"
                     type="color"
-                    className="p-1 h-10 w-14 cursor-pointer bg-white/5 border-white/20"
+                    className="p-1 h-10 w-14 cursor-pointer bg-background/80 dark:bg-white/5 border-border dark:border-white/20"
                     {...form.register("fgColor")}
                   />
                    <Input
-                    className="flex-1 bg-white/5 border-white/20 focus:ring-cyan-500"
+                    className="flex-1 bg-background/80 dark:bg-white/5 border-border dark:border-white/20 focus:ring-cyan-500"
                     value={form.watch('fgColor')}
                     onChange={(e) => form.setValue('fgColor', e.target.value)}
                   />
@@ -295,12 +303,12 @@ export default function QRGenieApp() {
       </Card>
       
       <div className="space-y-8">
-        <Card className="sticky top-8 bg-black/20 backdrop-blur-sm border-white/10 shadow-lg">
+        <Card className="sticky top-8 bg-card/50 dark:bg-black/20 backdrop-blur-sm border-border dark:border-white/10 shadow-lg">
           <CardHeader>
             <CardTitle className="font-headline text-3xl">Preview</CardTitle>
           </CardHeader>
           <CardContent className="flex flex-col items-center justify-center p-4">
-            <div className="w-full aspect-square transition-all duration-300 bg-black/20 rounded-lg flex items-center justify-center p-4 border-2 border-dashed border-white/10">
+            <div className="w-full aspect-square transition-all duration-300 bg-background/50 dark:bg-black/20 rounded-lg flex items-center justify-center p-4 border-2 border-dashed border-border/50 dark:border-white/10">
               {qrDataUrl ? (
                   <img src={qrDataUrl} alt="Generated QR Code" className="rounded-lg shadow-lg" style={{width: '100%', height: '100%'}}/>
               ) : (
@@ -323,14 +331,14 @@ export default function QRGenieApp() {
         </Card>
       </div>
 
-      <Card className="lg:col-span-3 bg-black/20 backdrop-blur-sm border-white/10 shadow-lg">
+      <Card className="lg:col-span-3 bg-card/50 dark:bg-black/20 backdrop-blur-sm border-border dark:border-white/10 shadow-lg">
         <CardHeader className="flex flex-row items-center justify-between">
           <div className="space-y-1">
             <CardTitle className="font-headline text-3xl">History</CardTitle>
             <CardDescription>Your last 5 generated codes.</CardDescription>
           </div>
           {history.length > 0 && (
-            <Button variant="ghost" size="icon" onClick={clearHistory} className="hover:bg-white/10 hover:text-red-400">
+            <Button variant="ghost" size="icon" onClick={clearHistory} className="hover:bg-accent/50 dark:hover:bg-white/10 hover:text-red-500 dark:hover:text-red-400">
               <Trash2 className="h-4 w-4" />
               <span className="sr-only">Clear History</span>
             </Button>
@@ -344,7 +352,7 @@ export default function QRGenieApp() {
               ))}
             </div>
           ) : (
-            <div className="text-center text-muted-foreground py-10 border-2 border-dashed border-white/10 rounded-lg">
+            <div className="text-center text-muted-foreground py-10 border-2 border-dashed border-border/50 dark:border-white/10 rounded-lg">
               <History className="mx-auto h-12 w-12 mb-2" />
               <p>No history yet. Generate a QR code to see it here.</p>
             </div>
