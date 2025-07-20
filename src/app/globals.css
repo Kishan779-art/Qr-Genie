@@ -10,13 +10,13 @@
     --card-foreground: 222.2 47.4% 11.2%;
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 47.4% 11.2%;
-    --primary: 251 79% 65%;
+    --primary: 251 79% 65%; /* #6246EA */
     --primary-foreground: 0 0% 98%;
     --secondary: 210 40% 96.1%;
     --secondary-foreground: 222.2 47.4% 11.2%;
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 195 84% 57%;
+    --accent: 195 84% 57%; /* #39C0ED */
     --accent-foreground: 222.2 47.4% 11.2%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
@@ -35,32 +35,32 @@
   }
 
   .dark {
-    --background: 228 11% 17%;
+    --background: 224 10% 17%; /* #272932 */
     --foreground: 0 0% 96%;
-    --card: 228 11% 20%;
+    --card: 224 10% 20%;
     --card-foreground: 0 0% 96%;
-    --popover: 228 11% 20%;
+    --popover: 224 10% 20%;
     --popover-foreground: 0 0% 96%;
-    --primary: 251 79% 65%;
+    --primary: 251 79% 65%; /* #6246EA */
     --primary-foreground: 0 0% 98%;
-    --secondary: 228 11% 25%;
+    --secondary: 224 10% 25%;
     --secondary-foreground: 0 0% 98%;
-    --muted: 228 11% 25%;
+    --muted: 224 10% 25%;
     --muted-foreground: 0 0% 63.9%;
-    --accent: 195 84% 57%;
+    --accent: 195 84% 57%; /* #39C0ED */
     --accent-foreground: 0 0% 9%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
-    --border: 228 11% 25%;
-    --input: 228 11% 25%;
+    --border: 224 10% 25%;
+    --input: 224 10% 25%;
     --ring: 195 84% 57%;
-    --sidebar-background: 228 11% 17%;
+    --sidebar-background: 224 10% 17%;
     --sidebar-foreground: 0 0% 96%;
     --sidebar-primary: 249 81% 60%;
     --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 228 11% 25%;
+    --sidebar-accent: 224 10% 25%;
     --sidebar-accent-foreground: 0 0% 98%;
-    --sidebar-border: 228 11% 25%;
+    --sidebar-border: 224 10% 25%;
     --sidebar-ring: 249 81% 60%;
   }
 }
@@ -76,7 +76,7 @@
 
 @layer utilities {
   .bg-gradient-animated {
-    @apply bg-gradient-to-br from-[#1e3a8a] via-[#0f172a] to-[#111827];
+    @apply bg-gradient-to-br from-primary via-background to-accent;
     background-size: 200% 200%;
     animation: gradient-animation 15s ease infinite;
   }
@@ -186,5 +186,14 @@
         -0.025em -0.025em 0 rgba(0, 255, 0, 0.75),
         -0.025em -0.05em 0 rgba(0, 0, 255, 0.75);
     }
+  }
+
+  @keyframes title-fade-in {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .animate-title-fade-in {
+    animation: title-fade-in 1s ease-out forwards;
   }
 }
