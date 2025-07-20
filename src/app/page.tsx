@@ -1,9 +1,13 @@
 import { QrCode } from 'lucide-react';
 import QRGenieApp from '@/components/qr-genie-app';
+import ThemeToggle from '@/components/theme-toggle';
 
 export default function Home() {
   return (
     <div className="flex flex-col items-center min-h-screen p-4 sm:p-6 md:p-8 bg-background">
+      <div className="absolute top-4 right-4">
+        <ThemeToggle />
+      </div>
       <header className="w-full max-w-4xl mb-8 text-center">
         <div className="flex items-center justify-center gap-3 mb-2">
           <QrCode className="w-10 h-10 text-primary" />

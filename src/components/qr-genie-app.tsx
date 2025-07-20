@@ -27,7 +27,52 @@ const formSchema = z.object({
 });
 
 type FormValues = z.infer<typeof formSchema>;
-type HistoryItem = FormValues & { timestamp: string };
+type HistoryItem = FormValues & { timestamp: string, qrDataUrl: string };
+
+function HistoryItemDisplay({ item, onRegenerate }: { item: HistoryItem, onRegenerate: (item: HistoryItem) => void }) {
+  const [qrCodeUrl, setQrCodeUrl] = useState('');
+
+  useEffect(() => {
+    const generateQr = async () => {
+      try {
+        const url = await QRCode.toDataURL(item.text, {
+          width: 64,
+          color: { dark: item.fgColor, light: "#00000000" },
+          margin: 1
+        });
+        setQrCodeUrl(url);
+      } catch (error) {
+        console.error("Failed to generate history QR code", error);
+      }
+    };
+    generateQr();
+  }, [item]);
+
+
+  return (
+    <li className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-3 rounded-lg bg-secondary/50 gap-4">
+      <div className="flex items-center gap-4 truncate w-full sm:w-auto">
+        {qrCodeUrl ? (
+          <img src={qrCodeUrl} alt="QR Code" className="h-16 w-16 rounded-md shrink-0 border bg-card p-1"/>
+        ) : (
+          <div className="h-16 w-16 rounded-md shrink-0 border bg-card p-1 flex items-center justify-center">
+            <QrCode className="h-8 w-8 text-muted-foreground" />
+          </div>
+        )}
+        <div className="truncate">
+          <p className="font-medium truncate">{item.text}</p>
+          <p className="text-sm text-muted-foreground">
+            {format(new Date(item.timestamp), "PPpp")} &bull; {item.size}px
+          </p>
+        </div>
+      </div>
+      <Button variant="outline" size="sm" onClick={() => onRegenerate(item)} className="w-full sm:w-auto">
+        <RefreshCw className="h-4 w-4 sm:mr-2"/>
+        <span className="hidden sm:inline">Regenerate</span>
+      </Button>
+    </li>
+  )
+}
 
 export default function QRGenieApp() {
   const { toast } = useToast();
@@ -64,7 +109,7 @@ export default function QRGenieApp() {
   }, [history]);
 
   const generateQrCode = async (data: FormValues) => {
-    if (!canvasRef.current) return;
+    if (!canvasRef.current) return { success: false, dataUrl: '' };
     try {
       await QRCode.toCanvas(canvasRef.current, data.text, {
         width: data.size,
@@ -76,7 +121,7 @@ export default function QRGenieApp() {
       });
       const dataUrl = canvasRef.current.toDataURL("image/png");
       setQrDataUrl(dataUrl);
-      return true;
+      return { success: true, dataUrl };
     } catch (err) {
       console.error(err);
       toast({
@@ -84,16 +129,17 @@ export default function QRGenieApp() {
         title: "Error",
         description: "Failed to generate QR code. The text might be too long for the selected size.",
       });
-      return false;
+      return { success: false, dataUrl: '' };
     }
   };
 
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
-    const success = await generateQrCode(data);
+    const { success, dataUrl } = await generateQrCode(data);
     if (success) {
       const newHistoryItem: HistoryItem = {
         ...data,
         timestamp: new Date().toISOString(),
+        qrDataUrl: dataUrl,
       };
       setHistory((prevHistory) => [newHistoryItem, ...prevHistory].slice(0, 5));
     }
@@ -143,7 +189,7 @@ export default function QRGenieApp() {
                 {...form.register("text")}
               />
               {form.formState.errors.text && (
-                <p className="text-sm text-red-500">{form.formState.errors.text.message}</p>
+                <p className="text-sm text-destructive">{form.formState.errors.text.message}</p>
               )}
             </div>
 
@@ -233,21 +279,7 @@ export default function QRGenieApp() {
           {history.length > 0 ? (
             <ul className="space-y-4">
               {history.map((item, index) => (
-                <li key={index} className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-3 rounded-lg bg-secondary/50 gap-4">
-                  <div className="flex items-center gap-4 truncate w-full sm:w-auto">
-                    <div style={{ backgroundColor: item.fgColor }} className="h-10 w-10 rounded-md shrink-0 border"/>
-                    <div className="truncate">
-                      <p className="font-medium truncate">{item.text}</p>
-                      <p className="text-sm text-muted-foreground">
-                        {format(new Date(item.timestamp), "PPpp")} &bull; {item.size}px
-                      </p>
-                    </div>
-                  </div>
-                  <Button variant="outline" size="sm" onClick={() => handleRegenerate(item)} className="w-full sm:w-auto">
-                    <RefreshCw className="h-4 w-4 sm:mr-2"/>
-                    <span className="hidden sm:inline">Regenerate</span>
-                  </Button>
-                </li>
+                 <HistoryItemDisplay key={index} item={item} onRegenerate={handleRegenerate} />
               ))}
             </ul>
           ) : (
