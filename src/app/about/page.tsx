@@ -106,12 +106,6 @@ const AboutPage = () => {
               </div>
               <span className="text-sm text-neutral-400">JavaScript</span>
             </div>
-            <div className="group flex flex-col items-center gap-2">
-              <div className="p-4 bg-black/20 backdrop-blur-md border border-white/10 rounded-xl shadow-lg transition-all duration-300 group-hover:border-cyan-400 group-hover:scale-110 group-hover:shadow-cyan-500/20">
-                <Cpu className="h-12 w-12 text-blue-400" />
-              </div>
-              <span className="text-sm text-neutral-400">Firebase Gen AI</span>
-            </div>
           </div>
         </section>
 
