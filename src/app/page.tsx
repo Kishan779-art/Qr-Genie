@@ -27,12 +27,12 @@ export default function Home() {
         <div className="absolute inset-0 bg-grid-cyan-500/10 bg-grid-14 [mask-image:radial-gradient(ellipse_at_center,white,transparent_75%)]"></div>
         <div className="relative z-10">
           <div className="inline-block p-4 bg-card/50 dark:bg-black/20 border border-border dark:border-white/10 rounded-2xl mb-6 shadow-lg backdrop-blur-sm">
-            <QrCode className="w-12 h-12 text-cyan-400" />
+            <QrCode className="w-10 h-10 sm:w-12 sm:h-12 text-cyan-400" />
           </div>
-          <h1 className="text-5xl font-bold tracking-tight font-headline sm:text-6xl lg:text-7xl">
+          <h1 className="text-4xl font-bold tracking-tight font-headline sm:text-6xl lg:text-7xl">
             QR Genie
           </h1>
-          <p className="mt-6 text-lg text-muted-foreground max-w-2xl mx-auto sm:text-xl">
+          <p className="mt-6 text-md text-muted-foreground max-w-2xl mx-auto sm:text-xl">
             Create beautiful, custom QR codes in seconds. Instantly generate, customize, and download QR codes for your projects.
           </p>
         </div>
@@ -43,12 +43,12 @@ export default function Home() {
       </main>
 
       <footer className="w-full py-6 text-center text-muted-foreground mt-auto px-4 relative z-10">
-        <div className="flex flex-col items-center justify-center gap-1">
+        <div className="flex flex-col items-center justify-center gap-1 text-sm">
           <p>&copy; {new Date().getFullYear()} QR Genie. All Rights Reserved.</p>
           <div className="flex items-center gap-2">
             <p>Designed & Developed by Kishan Patel</p>
-            <span className="text-gray-500">|</span>
-            <Link href="/about" className="hover:text-cyan-400 transition-colors">About</Link>
+            <span className="text-gray-500 hidden sm:inline">|</span>
+            <Link href="/about" className="hover:text-cyan-400 transition-colors hidden sm:inline">About</Link>
           </div>
         </div>
       </footer>
