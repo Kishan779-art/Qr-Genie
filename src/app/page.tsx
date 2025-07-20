@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 
 export default function Home() {
   return (
-    <div className="flex flex-col min-h-screen bg-background dark:bg-gradient-animated text-foreground">
+    <div className="flex flex-col min-h-screen bg-background text-foreground">
       <nav className="absolute top-6 right-6 z-20 flex items-center gap-4">
         <Button asChild variant="ghost" size="sm" className="hidden sm:flex text-foreground dark:text-white hover:bg-accent/50 dark:hover:bg-white/10 dark:hover:text-cyan-300 transition-all duration-300">
             <Link href="/">
