@@ -76,13 +76,29 @@
 
 @layer utilities {
   .bg-gradient-animated {
-    @apply bg-gradient-to-br from-primary via-background to-accent;
+    @apply bg-gradient-to-br from-purple-500 via-cyan-500 to-blue-500;
     background-size: 200% 200%;
     animation: gradient-animation 15s ease infinite;
   }
 
   .btn-gradient {
-    @apply bg-gradient-to-r from-cyan-500 to-blue-600 text-white;
+    @apply bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-semibold py-2 px-4 rounded-md shadow-md transition-all duration-300 ease-in-out hover:shadow-lg hover:scale-105 hover:glow;
+  }
+
+  .glow {
+    box-shadow: 0 0 20px rgba(0, 200, 255, 0.5);
+  }
+
+  .card-glow {
+    box-shadow: 0 0 10px rgba(0, 150, 200, 0.3);
+  }
+
+  .text-shadow-glow {
+    text-shadow: 0 0 5px rgba(0, 200, 255, 0.8);
+  }
+
+  .transition-colors {
+    transition: color 0.3s ease;
   }
 
   @keyframes gradient-animation {

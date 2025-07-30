@@ -3,6 +3,8 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import ThemeToggle from "@/components/theme-toggle";
 import { Layers3 } from "lucide-react";
+import { motion } from "framer-motion";
+import { Input, Pencil, Download } from "lucide-react";
 
 const AboutPage = () => {
   return (
@@ -25,16 +27,36 @@ const AboutPage = () => {
         <ThemeToggle />
       </nav>
 
-      <main className="relative z-10 max-w-5xl mx-auto p-4 sm:p-6 lg:p-8 space-y-24">
+      <motion.main
+        className="relative z-10 max-w-5xl mx-auto p-4 sm:p-6 lg:p-8 space-y-24"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+      >
         {/* Hero Section */}
         <section className="text-center pt-24 pb-12">
-          <h1 className="text-5xl sm:text-7xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-foreground/80 to-foreground animate-fade-in-down dark:from-neutral-50 dark:to-neutral-400">
+          <motion.h1
+            className="text-5xl sm:text-7xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-foreground/80 to-foreground animate-fade-in-down dark:from-neutral-50 dark:to-neutral-400"
+            initial={{ y: -20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
             QR Genie <span className="text-cyan-400">🔮</span>
-          </h1>
-          <p className="mt-6 text-lg sm:text-xl text-muted-foreground dark:text-neutral-300 max-w-2xl mx-auto animate-fade-in-up">
+          </motion.h1>
+          <motion.p
+            className="mt-6 text-lg sm:text-xl text-muted-foreground dark:text-neutral-300 max-w-2xl mx-auto animate-fade-in-up"
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+          >
             Create stunning QR codes instantly with style.
-          </p>
-          <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up animation-delay-300">
+          </motion.p>
+          <motion.div
+            className="mt-10 flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up animation-delay-300"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.6 }}
+          >
             <Button asChild size="lg" className="btn-gradient hover:shadow-cyan-500/50 hover:scale-105 transition-all duration-300">
               <Link href="/">
                 <ArrowLeft className="mr-2" />
@@ -46,16 +68,21 @@ const AboutPage = () => {
                 View Portfolio
               </a>
             </Button>
-          </div>
+          </motion.div>
         </section>
 
         {/* About the Tool */}
-        <section className="p-6 sm:p-8 bg-card/50 dark:bg-black/20 backdrop-blur-md border border-border dark:border-white/10 rounded-2xl shadow-lg animate-fade-in">
+        <motion.section
+          className="p-6 sm:p-8 bg-card/50 dark:bg-black/20 backdrop-blur-md border border-border dark:border-white/10 rounded-2xl shadow-lg animate-fade-in"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
           <h2 className="text-3xl sm:text-4xl font-bold text-center mb-6 text-cyan-400">About the Tool</h2>
           <p className="text-base sm:text-lg text-muted-foreground dark:text-neutral-300 text-center max-w-3xl mx-auto">
             QR Genie is a smart QR code generator that supports customization, logo embedding, and instant downloads. Built with Next.js, Tailwind CSS, TypeScript, and LocalStorage. Designed for speed and elegance.
           </p>
-        </section>
+        </motion.section>
 
         {/* How to Use */}
         <section>
@@ -63,21 +90,21 @@ const AboutPage = () => {
           <div className="grid md:grid-cols-3 gap-8 text-center">
             <div className="p-6 bg-card/50 dark:bg-black/20 backdrop-blur-md border border-border dark:border-white/10 rounded-2xl shadow-lg transition-all duration-300 hover:border-cyan-400 hover:scale-105 hover:shadow-cyan-500/20">
               <div className="flex justify-center items-center h-16 w-16 rounded-full bg-cyan-500/10 dark:bg-cyan-900/50 border-2 border-cyan-500 text-cyan-400 dark:text-cyan-300 mx-auto mb-4">
-                <span className="text-2xl font-bold">1</span>
+                <Input className="h-8 w-8"/>
               </div>
               <h3 className="text-xl font-semibold mb-2">Enter Content</h3>
               <p className="text-muted-foreground dark:text-neutral-400">Input your URL or text into the field.</p>
             </div>
             <div className="p-6 bg-card/50 dark:bg-black/20 backdrop-blur-md border border-border dark:border-white/10 rounded-2xl shadow-lg transition-all duration-300 hover:border-cyan-400 hover:scale-105 hover:shadow-cyan-500/20">
               <div className="flex justify-center items-center h-16 w-16 rounded-full bg-cyan-500/10 dark:bg-cyan-900/50 border-2 border-cyan-500 text-cyan-400 dark:text-cyan-300 mx-auto mb-4">
-                <span className="text-2xl font-bold">2</span>
+                <Pencil className="h-8 w-8"/>
               </div>
               <h3 className="text-xl font-semibold mb-2">Customize</h3>
               <p className="text-muted-foreground dark:text-neutral-400">Adjust the color, size, and style to match your brand.</p>
             </div>
             <div className="p-6 bg-card/50 dark:bg-black/20 backdrop-blur-md border border-border dark:border-white/10 rounded-2xl shadow-lg transition-all duration-300 hover:border-cyan-400 hover:scale-105 hover:shadow-cyan-500/20">
               <div className="flex justify-center items-center h-16 w-16 rounded-full bg-cyan-500/10 dark:bg-cyan-900/50 border-2 border-cyan-500 text-cyan-400 dark:text-cyan-300 mx-auto mb-4">
-                 <span className="text-2xl font-bold">3</span>
+                 <Download className="h-8 w-8"/>
               </div>
               <h3 className="text-xl font-semibold mb-2">Generate & Download</h3>
               <p className="text-muted-foreground dark:text-neutral-400">Click generate and download your QR code as a PNG.</p>
@@ -134,7 +161,7 @@ const AboutPage = () => {
           </div>
         </section>
 
-      </main>
+      </motion.main>
 
       <footer className="relative z-10 w-full py-6 text-center text-muted-foreground mt-12 px-4">
           <p>Built with ❤️ by Kishan Patel | QR Genie v1.0</p>
